@@ -5,7 +5,7 @@ Requires at least: 3.0
 Tested up to: 3.2.1
 Stable tag: 1.0
 
-Property and safely add specific scripts and stylesheets to posts, pages, and custom post types.
+Properly and safely add specific scripts and stylesheets to posts, pages, and custom post types.
 
 == Description ==
 
