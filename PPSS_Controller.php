@@ -45,14 +45,12 @@ class PPSS_Controller extends PW_ModelController
     
     $header_scripts = explode("\n", $header_scripts);
     foreach($header_scripts as $s) {
-      $s = str_replace( array('%SITE_URL%', '%THEME_URL%'), array(site_url(), get_template_directory_uri()), $s);
-      $this->_scripts[] = array( md5($s), $s, array(), false, false );
+      $this->process_url_to_script_array($s, false);
     }
     
     $footer_styles = explode("\n", $footer_styles);
     foreach($footer_styles as $s) {
-      $s = str_replace( array('%SITE_URL%', '%THEME_URL%'), array(site_url(), get_template_directory_uri()), $s);
-      $this->_scripts[] = array( md5($s), $s, array(), false, true );
+      $this->process_url_to_script_array($s, true);
     }
     
     $styles = explode("\n", $styles);
@@ -62,6 +60,22 @@ class PPSS_Controller extends PW_ModelController
     }
     
     $this->_extras .= $extras;
+	}
+	
+	public function process_url_to_script_array($url, $in_footer) {
+	  $url = trim($url);
+    
+    // extract any dependencies and store in an array
+    $dependencies = array();
+    if (preg_match('/\{[^\}]+\}$/', $url, $dependencies)) {
+      $dependencies = explode( ",", str_replace( array('{', '}', ' '), array('', '', ''), $dependencies[0] ) );
+    }
+
+    // remove {dependencies...} from the URL
+    $url = preg_replace('/\{[^\}]+\}$/', '', $url);
+    
+    $url = str_replace( array('%SITE_URL%', '%THEME_URL%'), array(site_url(), get_template_directory_uri()), $url);
+    $this->_scripts[] = array( md5($url), $url, $dependencies, false, $in_footer ); 
 	}
 	
 	public function print_script_and_style_extras() {
@@ -85,23 +99,31 @@ class PPSS_Controller extends PW_ModelController
     $extras = get_post_meta( $post->ID, '_ppss_extras', true);    
     
     ?>
-      <p style="margin-top:1em;">If you have scripts or stylesheets that you only want loaded only when this post is displayed, enter them below. <strong>NOTE:</strong> When entering the URLs, you may use the variables <code>%SITE_URL%</code> and <code>%THEME_URL%</code> for greater flexibility, e.g. <code>%SITE_URL%/scripts/this-post-script.js</code></p>
+      <p style="margin-top:1em;"><strong>INSTRUCTIONS</strong></p>
+      <ul style="color:#666; list-style:square; margin:0 0 0 1.5em;">
+        <li>When entering the URLs, you may use the variables <code>%SITE_URL%</code> and <code>%THEME_URL%</code> for greater flexibility, e.g. <code>%SITE_URL%/scripts/this-post-script.js</code></li>
+        <li>To have multiple scripts, put each on on its own line.</li>
+        <li>If your script has one or more dependencies, add them as a comma separated list in braces at the end of the URL, e.g.  <code>%SITE_URL%/scripts/code.js{jquery,json2}</code></li>
+        <li>Questions? Check out the <a href="http://philipwalton.com/2011/09/25/per-post-scripts-styles/">full documentation</a></li>
+      </ul>
+          
       <hr style="background-color:#ccc; border:1px solid #ccc; border-width:1px 0; border-color:#dfdfdf #fff #fff; height:0px; margin:1em 0" />
       <p>
-        <label for="ppss_meta_header_scripts"><strong>Header Scripts:</strong></label> List script URLs to be enqueued in the header. Put multiple scripts on separate lines
+        <label for="ppss_meta_header_scripts"><strong>Header Scripts:</strong></label> 
         <textarea id="ppss_meta_header_scripts" name="ppss_meta[header_scripts]" rows="1" style="width:100%;" ><?php echo $header_scripts; ?></textarea>
       </p>
       <p>
-        <label for="ppss_meta_header_scripts"><strong>Footer Scripts:</strong></label> List script URLs to be enqueued in the footer. Put multiple scripts on separate lines
+        <label for="ppss_meta_header_scripts"><strong>Footer Scripts:</strong></label>
         <textarea id="ppss_meta_header_scripts" name="ppss_meta[footer_scripts]" rows="1" style="width:100%;" ><?php echo $footer_styles; ?></textarea>
       </p>
       <p>
-        <label for="ppss_meta_styles"><strong>Stylesheets:</strong></label> List stylesheet URLs. Put multiple stylesheets on separate lines
+        <label for="ppss_meta_styles"><strong>Stylesheets:</strong></label>
         <textarea id="ppss_meta_styles" name="ppss_meta[styles]" rows="1" style="width:100%;" ><?php echo $styles; ?></textarea>
       </p>
       <p>
-        <label for="ppss_meta_extras"><strong>Extras:</strong></label> Hardcode Javascript or CSS here. It will be outputted right before the &lt;/header&gt; tag. Make sure to properly use the <code>&lt;script&gt;</code> and <code>&lt;style&gt;</code> tags.
+        <label for="ppss_meta_extras"><strong>Extras:</strong></label>
         <textarea id="ppss_meta_extras" name="ppss_meta[extras]" rows="2" style="width:100%;" ><?php echo $extras; ?></textarea>
+        <span class="description">Hardcode Javascript or CSS here. It will be outputted right before the &lt;/header&gt; tag. Make sure to properly use the <code>&lt;script&gt;</code> and <code>&lt;style&gt;</code> tags.</span>
       </p>
     <?php
   }
