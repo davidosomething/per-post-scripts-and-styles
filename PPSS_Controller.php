@@ -110,19 +110,19 @@ class PPSS_Controller extends PW_ModelController
       <hr style="background-color:#ccc; border:1px solid #ccc; border-width:1px 0; border-color:#dfdfdf #fff #fff; height:0px; margin:1em 0" />
       <p>
         <label for="ppss_meta_header_scripts"><strong>Header Scripts:</strong></label> 
-        <textarea id="ppss_meta_header_scripts" name="ppss_meta[header_scripts]" rows="1" style="width:100%;" ><?php echo $header_scripts; ?></textarea>
+        <textarea id="ppss_meta_header_scripts" name="ppss_meta[header_scripts]" rows="1" style="width:100%;" ><?php echo esc_attr($header_scripts); ?></textarea>
       </p>
       <p>
         <label for="ppss_meta_header_scripts"><strong>Footer Scripts:</strong></label>
-        <textarea id="ppss_meta_header_scripts" name="ppss_meta[footer_scripts]" rows="1" style="width:100%;" ><?php echo $footer_styles; ?></textarea>
+        <textarea id="ppss_meta_header_scripts" name="ppss_meta[footer_scripts]" rows="1" style="width:100%;" ><?php echo esc_attr($footer_styles); ?></textarea>
       </p>
       <p>
         <label for="ppss_meta_styles"><strong>Stylesheets:</strong></label>
-        <textarea id="ppss_meta_styles" name="ppss_meta[styles]" rows="1" style="width:100%;" ><?php echo $styles; ?></textarea>
+        <textarea id="ppss_meta_styles" name="ppss_meta[styles]" rows="1" style="width:100%;" ><?php echo esc_attr($styles); ?></textarea>
       </p>
       <p>
         <label for="ppss_meta_extras"><strong>Extras:</strong></label>
-        <textarea id="ppss_meta_extras" name="ppss_meta[extras]" rows="2" style="width:100%;" ><?php echo $extras; ?></textarea>
+        <textarea id="ppss_meta_extras" name="ppss_meta[extras]" rows="2" style="width:100%;" ><?php echo esc_attr($extras); ?></textarea>
         <span class="description">Hardcode Javascript or CSS here. It will be outputted right before the &lt;/header&gt; tag. Make sure to properly use the <code>&lt;script&gt;</code> and <code>&lt;style&gt;</code> tags.</span>
       </p>
     <?php

@@ -14,12 +14,12 @@ Property and safely add specific scripts and stylesheets to posts, pages, and cu
 **Features:**
 
 * Dynamic URLs with `%SITE_URL%` and `%THEME_URL%` variables
-* Script dependency support as well as duplication checking
+* Script dependency support as well as script duplication checking
 * The option to load scripts in either the header and footer
 * Attach scripts to posts, pages, and custom post types
-* Load attached scripts and styles not just on the post’s page, but on the home page or any other page that might display it.
+* Load attached scripts and styles not just on that post's page, but on the home page or any other page where that post is displayed.
 
-For complete documentation, visit [philipwalton.com](http://philipwalton.com)
+For complete documentation, visit [philipwalton.com](http://philipwalton.com/2011/09/25/per-post-scripts-styles/)
 
 == Installation ==
 
