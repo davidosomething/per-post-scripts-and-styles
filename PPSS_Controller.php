@@ -16,7 +16,7 @@ class PPSS_Controller extends PW_ModelController
     add_action( 'save_post', array($this, 'save_meta_box_data') );
     add_action( 'wp_enqueue_scripts', array($this, 'add_scripts_and_styles') );
     add_action( 'wp_head', array($this, 'print_script_and_style_extras') );
-	}
+	}	
 	
 	public function add_scripts_and_styles()
 	{
@@ -85,7 +85,7 @@ class PPSS_Controller extends PW_ModelController
   // Add meta box as a custom write panel
   public function add_meta_boxes()
   {
-  	foreach ( $this->model->post_types as $post_type=>$post_name ) { // get all post types
+  	foreach ( $this->model->option['post_types'] as $post_type ) { // get all post types
   		add_meta_box('ppss', 'Per Post Scripts & Styles', array($this, 'print_meta_box'), $post_type, 'normal', 'default');
   	}
   }
