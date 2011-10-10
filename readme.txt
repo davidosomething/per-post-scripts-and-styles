@@ -5,21 +5,21 @@ Requires at least: 3.0
 Tested up to: 3.2.1
 Stable tag: 1.0.1
 
-Properly and safely add specific scripts and stylesheets to posts, pages, and custom post types.
+Properly and safely add specific Javascript and CSS stylesheets to single posts, pages, and custom post types.
 
 == Description ==
 
-Property and safely add specific scripts and stylesheets to posts, pages, and custom post types.
+Properly and safely add specific Javascript and CSS stylesheets to single posts, pages, and custom post types.
 
 **Features:**
 
 * Dynamic URLs with `%SITE_URL%` and `%THEME_URL%` variables
 * Script dependency support as well as script duplication checking
-* The option to load scripts in either the header or the footer
+* The option to load scripts in either the header and footer
 * Attach scripts to posts, pages, and custom post types
 * Load attached scripts and styles not just on that post's page, but on the home page or any other page where that post is displayed.
 
-For complete documentation, visit [philipwalton.com](http://philipwalton.com/2011/09/25/per-post-scripts-styles/)
+For complete documentation, visit [philipwalton.com](http://philipwalton.com/2011/09/25/per-post-scripts-and-styles/)
 
 == Installation ==
 
@@ -35,3 +35,4 @@ For complete documentation, visit [philipwalton.com](http://philipwalton.com/201
 
 = 1.0 =
 * First publicly released version
+
