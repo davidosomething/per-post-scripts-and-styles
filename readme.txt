@@ -3,7 +3,7 @@ Contributors: philipwalton
 Tags: Javascript, CSS, script, stylesheet, post
 Requires at least: 3.0
 Tested up to: 3.2.1
-Stable tag: 1.0
+Stable tag: 1.0.1
 
 Properly and safely add specific scripts and stylesheets to posts, pages, and custom post types.
 
@@ -15,7 +15,7 @@ Property and safely add specific scripts and stylesheets to posts, pages, and cu
 
 * Dynamic URLs with `%SITE_URL%` and `%THEME_URL%` variables
 * Script dependency support as well as script duplication checking
-* The option to load scripts in either the header and footer
+* The option to load scripts in either the header or the footer
 * Attach scripts to posts, pages, and custom post types
 * Load attached scripts and styles not just on that post's page, but on the home page or any other page where that post is displayed.
 
@@ -30,6 +30,8 @@ For complete documentation, visit [philipwalton.com](http://philipwalton.com/201
 
 == Changelog ==
 
+= 1.0.1 =
+* Fixed a bug where meta boxes weren't properly showing up on custom post type edit pages
+
 = 1.0 =
 * First publicly released version
-
