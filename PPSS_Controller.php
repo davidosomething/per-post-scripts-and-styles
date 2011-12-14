@@ -66,7 +66,7 @@ class PPSS_Controller extends PW_ModelController
     // make sure the url isn't just white space
     if (preg_match('/\S/', $url) ) {
       $url = trim($url);
-      $url = str_replace( array('%SITE_URL%', '%THEME_URL%'), array(site_url(), get_template_directory_uri()), $url);
+      $url = str_replace( array('%SITE_URL%', '%THEME_URL%'), array(site_url(), get_stylesheet_directory_uri()), $url);
       $this->_styles[] = array( md5($url), $url );
     }
   }
@@ -88,7 +88,7 @@ class PPSS_Controller extends PW_ModelController
       // remove {dependencies...} from the URL
       $url = preg_replace('/\{[^\}]+\}$/', '', $url);
     
-      $url = str_replace( array('%SITE_URL%', '%THEME_URL%'), array(site_url(), get_template_directory_uri()), $url);
+      $url = str_replace( array('%SITE_URL%', '%THEME_URL%'), array(site_url(), get_stylesheet_directory_uri()), $url);
       $this->_scripts[] = array( md5($url), $url, $dependencies, false, $in_footer );
     }
   }
