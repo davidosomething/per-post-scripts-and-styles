@@ -2,8 +2,12 @@
 
 class PPSS_Controller extends PW_ModelController
 {
-  // store a list of all the extras from all posts to print at the end of the header
+  // store a list of all the header_extras from all $posts to print at the end of the header
   protected $_extras;
+  
+  // store a list of all the footer_extras from all $posts to print at the end of the body
+  protected $_footer_extras;
+  
   
   public function __construct()
   {
@@ -16,6 +20,7 @@ class PPSS_Controller extends PW_ModelController
     add_action( 'save_post', array($this, 'save_meta_box_data') );
     add_action( 'wp_enqueue_scripts', array($this, 'add_scripts_and_styles') );
     add_action( 'wp_head', array($this, 'print_script_and_style_extras') );
+    add_action( 'wp_print_footer_scripts', array($this, 'print_script_footer_extras') );
   } 
   
   public function add_scripts_and_styles()
@@ -23,25 +28,23 @@ class PPSS_Controller extends PW_ModelController
     global $posts, $post;
     $options = $this->model->option;
     
-    // if we're on a single page, just check the first post
+    // check what page we're on before determining what $posts to inspect
     if ( is_single() ) {
       $this->load_scripts_and_styles_for_post($post->ID);
-    } else if ( is_home() && $options['on'] === 'home' ) {
-      foreach($posts as $p) {
-        $this->load_scripts_and_styles_for_post($p->ID);
-      }
-    } else if ( $options['on'] === 'all' ) {
+    } else if ( ( is_home() && $options['on'] === 'home' ) || ( $options['on'] === 'all' ) ) {
       foreach($posts as $p) {
         $this->load_scripts_and_styles_for_post($p->ID);
       }
     }
   }
   
-  public function load_scripts_and_styles_for_post( $post_id ) {
+  public function load_scripts_and_styles_for_post( $post_id )
+  {  
     $header_scripts = get_post_meta( $post_id, '_ppss_header_scripts', true);
     $footer_styles = get_post_meta( $post_id, '_ppss_footer_scripts', true);
     $styles = get_post_meta( $post_id, '_ppss_styles', true);
     $extras = get_post_meta( $post_id, '_ppss_extras', true);
+    $footer_extras = get_post_meta( $post_id, '_ppss_footer_extras', true); 
 
     $header_scripts = explode("\n", $header_scripts);
     foreach($header_scripts as $s) {
@@ -59,6 +62,7 @@ class PPSS_Controller extends PW_ModelController
     }
     
     $this->_extras .= $extras;
+    $this->_footer_extras .= $footer_extras;
   }
   
   public function process_url_to_style_array($url)
@@ -93,8 +97,14 @@ class PPSS_Controller extends PW_ModelController
     }
   }
   
-  public function print_script_and_style_extras() {
+  public function print_script_and_style_extras()
+  {
     echo $this->_extras;
+  }
+  
+  public function print_script_footer_extras()
+  {  
+    echo $this->_footer_extras;
   }
   
   // Add meta box as a custom write panel
@@ -111,8 +121,8 @@ class PPSS_Controller extends PW_ModelController
     $header_scripts = get_post_meta( $post->ID, '_ppss_header_scripts', true);
     $footer_styles = get_post_meta( $post->ID, '_ppss_footer_scripts', true);
     $styles = get_post_meta( $post->ID, '_ppss_styles', true);
-    $extras = get_post_meta( $post->ID, '_ppss_extras', true);    
-    
+    $extras = get_post_meta( $post->ID, '_ppss_extras', true);
+    $footer_extras = get_post_meta( $post->ID, '_ppss_footer_extras', true); 
     ?>
       <p style="margin-top:1em;"><strong>INSTRUCTIONS</strong></p>
       <ul style="color:#666; list-style:square; margin:0 0 0 1.5em;">
@@ -136,9 +146,14 @@ class PPSS_Controller extends PW_ModelController
         <textarea id="ppss_meta_styles" name="ppss_meta[styles]" rows="1" style="width:100%;" ><?php echo esc_attr($styles); ?></textarea>
       </p>
       <p>
-        <label for="ppss_meta_extras"><strong>Extras:</strong></label>
+        <label for="ppss_meta_extras"><strong>Header Extras:</strong></label>
         <textarea id="ppss_meta_extras" name="ppss_meta[extras]" rows="2" style="width:100%;" ><?php echo esc_attr($extras); ?></textarea>
-        <span class="description">Hardcode Javascript or CSS here. It will be outputted right before the &lt;/header&gt; tag. Make sure to properly use the <code>&lt;script&gt;</code> and <code>&lt;style&gt;</code> tags.</span>
+        <span class="description">Hardcode Javascript or CSS here. It will be outputted right before the <code>&lt;/header&gt;</code> tag. Make sure to properly use the <code>&lt;script&gt;</code> and <code>&lt;style&gt;</code> tags.</span>
+      </p>
+      <p>
+        <label for="ppss_meta_footer_extras"><strong>Footer Extras:</strong></label>
+        <textarea id="ppss_meta_extras" name="ppss_meta[footer_extras]" rows="2" style="width:100%;" ><?php echo esc_attr($footer_extras); ?></textarea>
+        <span class="description">Hardcode Javascript here. It will be outputted right before the <code>&lt;/body&gt;</code> tag. Make sure to properly use the <code>&lt;script&gt;</code> tags.</span>
       </p>
     <?php
   }
