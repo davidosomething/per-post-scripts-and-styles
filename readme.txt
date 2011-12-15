@@ -40,4 +40,3 @@ For complete documentation, visit [philipwalton.com](http://philipwalton.com/201
 
 = 1.0 =
 * First publicly released version
-
