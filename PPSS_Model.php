@@ -8,9 +8,9 @@ class PPSS_Model extends PW_Model
 	
 	protected $_help_tab = 
 	  array(
-	    'title' => 'Instructions',
-  	  'id' => 'per-post-scripts-and-styles-help1',
-  	  'content' => '<p>This is the instructions</p>'
+	    'title' => 'Overview',
+  	  'id' => 'per-post-scripts-and-styles-help',
+  	  'content' => '<p>In the edit screen of each post there\'s a meta box below the content titled "Per Post Scripts &amp; Styles". To add Javascript or CSS to the post, simply enter the URLs of any files that you want to load. There are even boxes to hardcode scripts or styles into.</p><p>If you want more help, check out the <a href="http://philipwalton.com/2011/09/25/per-post-scripts-and-styles/">full documentation.</a>'
 	  );
 
   public function data()
