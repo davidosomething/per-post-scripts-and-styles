@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name: Per Post Scripts & Styles
+ * Plugin Name: Per Post Scripts & Styles (davidosomething fork)
  * Plugin URI: http://philipwalton.com/2011/09/25/per-post-scripts-and-styles/
  * Description: Add specific scripts and stylesheets to posts, pages, and custom post types.
- * Version: 1.1
- * Author: Philip Walton
+ * Version: 1.2-fork
+ * Author: Philip Walton, @davidosomething
  * Author URI: http://philipwalton.com
  */
 
